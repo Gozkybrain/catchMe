@@ -1,0 +1,109 @@
+.myBtn {
+  background-color: #3b5998;
+  margin: 0 10px;
+  color: #fff;
+  width: 40%;
+}
+
+
+.custom-form-control {
+  /* background-color: red; */
+ width: 100%;
+}
+
+.btnPrimary {
+  background-color: #212529;
+  color: #fff;
+  text-align: center;
+}
+
+.mine {
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border: 10px solid;
+}
+
+#search {
+  margin-top: 30px;
+}
+
+.img {
+  width: 70%;
+  /* margin: 20px; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.noSearch {
+  background-color: pink;
+  border-radius: 7px;
+  border: 1px solid red;
+  padding: 3px;
+}
+
+.searchError {
+  /* margin: 40px 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+.homeCard {
+    display: none;
+  }
+
+
+.font {
+  display: block;
+  font-size: 15px;
+  text-align: center;
+}
+
+
+/* ** this is for home card component */
+.myLinking {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.myLinking:hover,
+.myLinking.active {
+  color: gold;
+  font-weight: 600;
+}
+
+.currents {
+  color: gold;
+}
+
+
+
+
+@media (max-width: 767px) {
+
+  /* specific to mobile devices */
+  .searchError {
+    margin-bottom: 10px;
+  }
+
+  .img {
+    width: 50%;
+  }
+
+  .homeCard {
+    display: block;
+    background-color: #212529;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px 1px;
+    width: 100%;
+    text-align: center;
+  }
+
+}
