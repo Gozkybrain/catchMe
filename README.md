@@ -43,6 +43,7 @@ CatchMe is a simple and addictive web-based game where the player controls a gam
 - [React](https://reactjs.org/)
 - [FontAwesome](https://fontawesome.com/)
 - [React Bootstrap](https://react-bootstrap.github.io/)
+- [MixKit](https://mixkit.co/free-stock-music/)
 
 Feel free to contribute to the game and make it even better!
 
