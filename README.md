@@ -1,112 +1,49 @@
-# watchMe - Movie App
+# CatchMe Game
 
-watchMe is a movie app built with React that allows users to search for movies, view popular movies, and get movie details. It leverages the power of TheMovieDB API to fetch movie data.
+![CatchMe Preview](./src/assets/head-bg.svg)
 
-![watchMe Preview](./src/assets/head-bg.svg)
+## Overview
+
+CatchMe is a simple and addictive web-based game where the player controls a game piece using arrow keys to avoid obstacles and score points. The objective is to survive for as long as possible while collecting points. The game keeps track of the player's score, and the speed of the game increases as the score increases.
 
 ## Features
 
-- Search for movies by title
-- View popular movies
-- Get detailed information about a movie
-- Watch movies through the app (Note: Streaming functionality not implemented)
+- Simple and intuitive game play
+- Responsive design for both desktop and mobile devices
+- Real-time scoring and speed adjustments based on the player's performance
+- Modal pop-ups for game over and pause scenarios
+- Attractive user interface with colorful graphics
 
-## Technologies Used
+## Technology Used
 
-- React
-- Axios
-- Framer Motion
-- react-bootstrap
-- Animate.css
+- React: A popular JavaScript library for building user interfaces
+- FontAwesome: For displaying attractive icons in the game
+- React Bootstrap: For styling and creating responsive UI components
+- JavaScript: For implementing game logic and event handling
+- HTML & CSS: For structuring the game layout and adding styles
 
-## Getting Started
+## How to Play
 
-To get started with the watchMe app, follow these steps:
+1. Use the arrow keys (Up, Down, Left, Right) to control the game piece.
+2. Avoid colliding with the obstacles to stay in the game.
+3. As you continue playing, your score will increase. The higher the score, the faster the game speed.
+4. The game ends if you collide with an obstacle.
+5. To pause the game, press the 'Pause' button, and to resume, press the 'Continue Playing' button.
 
-1. Clone the repository: `git clone https://github.com/Gozkybrain/watcheMe`
-2. Install the dependencies: `npm install`
-3. Obtain an API key from TheMovieDB API: [https://www.themoviedb.org/](https://www.themoviedb.org/)
-4. Replace the placeholder API key in the code with your own API key. (See instructions in the code files)
-5. Start the development server: `npm start`
-6. Open the app in your browser: [http://localhost:3000](http://localhost:3000)
+## Future Suggestions
 
-## Project Structure
-
-The project structure is organized as follows:
-
-- `src/`
-  - `assets/` - Contains static assets like images and stylesheets
-  - `components/`
-    - `Navigation.js` - Renders the navigation links and app logo.
-    - `SearchBar.js` - Provides a search input field to search for movies.
-    - `MovieCard.js` - Displays a movie thumbnail, title, and year.
-    - `MovieDetails.js` - Displays detailed information about a movie (description, actors, watch button).
-    - `InfiniteScroll.js` - Implements the infinite scroll functionality for popular movies.
-    - `SearchResult.js` - Renders the search results based on the user's query.
-    - `VideoModal.js` - Displays a modal with an embedded YouTube video.
-  - `services/` - Contains functions for making API requests
-  - `App.js` - Entry point of the application
-  - `index.js` - Renders the app into the DOM
-
-## Navigation Component
-
-The `Navigation` component is responsible for rendering the navigation links and app logo in the app's header. It utilizes the `react-bootstrap` library for styling and responsiveness.
-
-The navigation links include options to navigate to the "Recently Added" section, "Upcoming" section, "Developer Profile," and "Documentation." The "Developer Profile" link directs users to the developer's profile page on [https://www.gozkybrain.com.ng/gee-brain/](https://www.gozkybrain.com.ng/gee-brain/). The "Documentation" link redirects users to the project's GitHub repository [https://github.com/Gozkybrain/watcheMe](https://github.com/Gozkybrain/watcheMe).
-
-The `Navigation` component also includes a search form for users to search for movies by title. The search functionality is implemented in the `SearchBar` component.
-
-## Search Functionality
-
-The watchMe app provides a search feature that allows users to search for movies by their title. Here's how the search functionality works:
-
-1. Enter a movie title in the search bar.
-2. Press the "Search" button or hit Enter to initiate the search.
-3. The app will fetch the search results from the TheMovieDB API using the Axios library.
-4. The search results will be displayed on the screen, showing the movie titles and other relevant information.
-5. Clicking on a movie from the search results will show more detailed information about that movie.
-
-The search functionality is implemented in the `SearchBar` component. It makes an API request to TheMovieDB API and updates the search results in the `SearchResult` component.
-
-## Popular Movies and Infinite Scroll
-
-The watchMe app also provides a section to view popular movies. The popular movies are fetched from TheMovieDB API and displayed using the `InfiniteScroll` component.
-
-The `InfiniteScroll` component implements the infinite scroll functionality, allowing users to scroll through an ever-growing list of popular movies. As the user scrolls, more movies are automatically loaded and appended to the list.
-
-## Movie Details and Video Modal
-
-When a user clicks on a movie thumbnail or title in the search results or popular movies, the app displays more detailed information about that movie using the `MovieDetails` component. The `MovieDetails` component shows the movie description, actors, and a button to watch the movie.
-
-The `VideoModal` component displays a modal with an embedded YouTube video. It allows users to watch movies through the app, although the streaming functionality is not implemented in this version.
-
-## Roadmap
-
-Here's a step-by-step guide to building the watchMe app:
-
-1. **Project Setup**: Set up a new React project with the necessary dependencies like React, Axios, Framer Motion, and react-bootstrap.
-2. **Create Necessary Components**: Create the required components, including Navigation, SearchBar, MovieCard, MovieDetails, InfiniteScroll, SearchResult, and VideoModal.
-3. **API Integration for Search**: Implement API integration for the search functionality. Use the API to fetch movie data based on the user's search query.
-4. **Fetch and Display Popular Movies**: Utilize the API to fetch the most popular movies. Display them using the InfiniteScroll component.
-5. **Movie Detail Modal**: Create a modal component to display detailed information about a movie when a user clicks on a movie thumbnail or title.
-6. **Video Modal**: Implement the VideoModal component to display an embedded YouTube video when a user clicks on the watch button in MovieDetails.
-7. **Styling**: Style the components to achieve the desired UI/UX. Use CSS or a styling library like styled-components.
-8. **Testing and Debugging**: Test the app thoroughly and fix any bugs or issues that arise during testing.
-9. **Deployment**: Deploy the app to a hosting service such as Netlify or Heroku to make it accessible to others.
+1. Implement a high-score leader board to compete with other players.
+2. Add more obstacles and power-ups to make the game play more engaging.
+3. Introduce different game modes with varying levels of difficulty.
+4. Include sound effects and background music to enhance the gaming experience.
+5. Create levels with different backgrounds and themes to add variety.
 
 ## Resources
 
-Here are some resources that might be helpful for building the watchMe app:
+- [React](https://reactjs.org/)
+- [FontAwesome](https://fontawesome.com/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
 
-- [React documentation](https://reactjs.org/docs)
-- [Axios documentation](https://axios-http.com/docs/intro)
-- [Framer Motion documentation](https://www.framer.com/api/motion/)
-- [react-bootstrap documentation](https://react-bootstrap.github.io/)
-- [Animate.css](https://animate.style/)
+Feel free to contribute to the game and make it even better!
 
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-
+Enjoy playing CatchMe!

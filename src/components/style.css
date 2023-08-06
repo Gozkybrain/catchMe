@@ -1,0 +1,113 @@
+/* App.css */
+/* body, html {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+} */
+/* ObstacleCourseGame.css */
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.myScore {
+
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+/* Common styles that apply to all devices */
+.myBtn {
+  border-radius: 10px;
+  border: 1px solid #3b5998;
+  padding: 20px 30px;
+  margin: 10px 2px;
+  width: 100px;
+  color: #3b5998;
+  background-color: white;
+}
+
+
+.myBtn:hover {
+  background-color: #3b5998;
+  color: aliceblue;
+  border: 1px solid white;
+}
+
+/* Media query for mobile devices in portrait mode */
+@media (max-width: 767px) and (orientation: portrait) {
+  .myBtn {
+    background-color: white;
+  }
+}
+
+/* Media query for mobile devices in landscape mode */
+@media (max-width: 767px) and (orientation: landscape) {
+  .myBtn {
+    /* background-color: yellow; */
+    padding: 5px 10px;
+    width: 60px;
+
+  }
+}
+
+/* Styles for PC (Desktop view) */
+@media (min-width: 768px) {
+  .myBtn {
+    background-color: white;
+  }
+}
+
+
+/* GamePiece.css */
+.game-piece {
+  width: 30px;
+  height: 30px;
+  background-color: red;
+}
+
+/* Obstacle.css */
+.obstacle {
+  background-color: green;
+}
+
+/* Score.css */
+.score {
+  background-color: #ffffff63;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 25px;
+  font-weight: 600;
+  padding: 5px 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+/* Default styles for the div */
+.portrait-only {
+  display: block;
+  /* Show the div by default */
+}
+
+/* Media query for portrait mode */
+@media (orientation: landscape) {
+  .portrait-only {
+    display: none;
+    /* Hide the div on landscape mode */
+  }
+}
+
+
+.gamePause {
+  display: flex;
+  justify-content: flex-end;
+}
