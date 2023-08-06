@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faArrowDown, faPlay, faArrowLeft, faArrowRight, faPause } from '@fortawesome/free-solid-svg-icons';
 import Obstacle from './Obstacle';
 import { Modal, Button } from 'react-bootstrap';
 import ObstacleCourseGame from './ObstacleCourseGame';
@@ -9,11 +9,10 @@ import './AppCover/Cover.css';
 import Cover from './AppCover/Cover';
 import ALertBox from './AlertBox';
 import gamePieceImage from '../assets/myShip.png'; // Import your game piece image here
-import backgroundMusic from '../assets/main-song.mp3'; // Import your background music here
 import collisionSound from '../assets/hit.wav'; // Import your collision sound here
 
 const GameArea = () => {
-  // * Define the game constants and states
+  // Define the game constants and states
   const gameAreaWidth = window.innerWidth;
   const gameAreaHeight = window.innerHeight;
   const gamePieceSize = 30;
@@ -32,25 +31,24 @@ const GameArea = () => {
   const [isGameStarted, setIsGameStarted] = useState(false); // New state to track if the game has started
   const [gameSpeed, setGameSpeed] = useState(5); // Adjust game speed based on score
 
-  // ! Audio elements for background music and collision sound using useRef
-  const backgroundMusicRef = useRef(new Audio(backgroundMusic));
+  // Audio element for collision sound using useRef
   const collisionSoundRef = useRef(new Audio(collisionSound));
 
-  // == Function to create a new obstacle
+  // Function to create a new obstacle
   const createObstacle = useCallback(() => {
-    // == Generate a random height for the obstacle between minHeight and maxHeight
+    // Generate a random height for the obstacle between minHeight and maxHeight
     const height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight);
 
-    // == There is a 10% chance of creating a longer obstacle
+    // There is a 10% chance of creating a longer obstacle
     const isLongObstacle = Math.random() < 0.1;
 
-    // == Choose the obstacle width based on whether it's a long obstacle or not
+    // Choose the obstacle width based on whether it's a long obstacle or not
     const obstacleWidthToUse = isLongObstacle ? obstacleWidthWithBonus : obstacleWidth;
 
-    // == Adjust the top obstacle height to match the longer bottom obstacle if it's a long obstacle
+    // Adjust the top obstacle height to match the longer bottom obstacle if it's a long obstacle
     const topObstacleHeight = isLongObstacle ? height + 50 : height;
 
-    // == Create the top obstacle object
+    // Create the top obstacle object
     const topObstacle = {
       x: gameAreaWidth,
       y: 0,
@@ -61,7 +59,7 @@ const GameArea = () => {
       borderRadius: isLongObstacle ? '0 0 20px 20px' : '0 0 10px 10px',
     };
 
-    // == Create the bottom obstacle object
+    // Create the bottom obstacle object
     const bottomObstacle = {
       x: gameAreaWidth,
       y: topObstacleHeight + obstacleGap,
@@ -72,19 +70,19 @@ const GameArea = () => {
       borderRadius: isLongObstacle ? '20px 20px 0 0' : '10px 10px 0 0',
     };
 
-    // == Add the obstacles to the list of obstacles
+    // Add the obstacles to the list of obstacles
     setObstacles((prevObstacles) => [...prevObstacles, topObstacle, bottomObstacle]);
   }, [gameAreaWidth, gameAreaHeight, obstacleGap, maxHeight, minHeight]);
 
-  // == Function to move obstacles
+  // Function to move obstacles
   const moveObstacles = useCallback(() => {
-    // == Move each obstacle 1 pixel to the left
+    // Move each obstacle 1 pixel to the left
     setObstacles((prevObstacles) => prevObstacles.map((obstacle) => ({ ...obstacle, x: obstacle.x - 1 })));
   }, []);
 
-  // * Function to check collision
+  // Function to check collision
   const checkCollision = useCallback(() => {
-    // * Check if the game piece collides with any of the obstacles
+    // Check if the game piece collides with any of the obstacles
     for (const obstacle of obstacles) {
       if (
         gamePieceX < obstacle.x + obstacle.width &&
@@ -92,22 +90,22 @@ const GameArea = () => {
         gamePieceY < obstacle.y + obstacle.height &&
         gamePieceY + 30 > obstacle.y
       ) {
-        // * If there is a collision, set the game over state to true and stop the background music
+        // If there is a collision, set the game over state to true and play the collision sound
         setIsGameOver(true);
-        handleCollision(); // Call the function to stop the background music
+        handleCollision(); // Call the function to play the collision sound
         setShowModal(true);
         return;
       }
     }
   }, [obstacles, gamePieceX, gamePieceY]);
 
-  // ** Function to update the game area
+  // Function to update the game area
   const updateGameArea = useCallback(() => {
     if (!isGameStarted || isGameOver || isPaused) {
       return;
     }
 
-    // ** Adjust game speed based on score
+    // Adjust game speed based on score
     if (score > 15000) {
       setGameSpeed(0.3);
     } else if (score > 12000) {
@@ -117,25 +115,26 @@ const GameArea = () => {
     } else if (score > 6000) {
       setGameSpeed(2);
     } else if (score > 3000) {
-      setGameSpeed(3);
+      setGameSpeed(0.2);
     } else {
       setGameSpeed(5);
     }
 
-    // ** Increment the score by 1
+    // Increment the score by 1
     setScore((prevScore) => prevScore + 1);
 
-    // == Create a new obstacle if there are no obstacles or if the last obstacle is almost at the end of the game area
+    // Create a new obstacle if there are no obstacles or if the last obstacle is almost at the end of the game area
     if (obstacles.length === 0 || obstacles[obstacles.length - 1].x <= gameAreaWidth - obstacleGap) {
       createObstacle();
     }
 
-    // ** Move the obstacles and check for collision
+    // Move the obstacles and check for collision
     moveObstacles();
     checkCollision();
   }, [isGameStarted, isGameOver, isPaused, obstacles, gameAreaWidth, obstacleGap, createObstacle, moveObstacles, checkCollision, score]);
 
-  // ** Handle key press for game piece movement
+  
+  // Handle key press for game piece movement
   const handleKeyPress = (event) => {
     const key = event.key;
     if (!isGameOver && !isPaused && isGameStarted) {
@@ -151,95 +150,29 @@ const GameArea = () => {
     }
   };
 
-  // ** Function to handle starting the game
+  // Function to handle starting the game
   const handleStartGame = () => {
     setIsGameStarted(true);
     setShowModal(false);
-    // ! Start the background music when the game starts
-    backgroundMusicRef.current.play().catch((err) => {
-      console.log(err); // ? Handle play() promise rejection
-    });
   };
 
-  // ** Use effect to start and stop the game loop
-  useEffect(() => {
-    // ! Pause the background music when the component mounts
-    const backgroundMusic = backgroundMusicRef.current; // Store in a variable
-    backgroundMusic.volume = 0.3; // Adjust the volume if needed
-    backgroundMusic.loop = true;
-    backgroundMusic.pause();
-
-    const interval = setInterval(updateGameArea, gameSpeed);
-    return () => {
-      clearInterval(interval);
-
-      // ! Pause and reset the background music when the component unmounts
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-    };
-  }, [updateGameArea, gameSpeed]);
-
-  // ! Use effect to handle the cleanup of backgroundMusicRef
-  useEffect(() => {
-    // ? Pause the background music when the component mounts
-    const backgroundMusic = backgroundMusicRef.current; // Store in a variable
-    backgroundMusic.volume = 0.3; // Adjust the volume if needed
-    backgroundMusic.loop = true;
-    backgroundMusic.pause();
-
-    // ! Add event listener for the "click" event to start the background music when the user interacts with the page
-    const playBackgroundMusic = () => {
-      backgroundMusic.play().catch((err) => {
-        console.log(err); // ? Handle play() promise rejection
-      });
-      // ! Remove the event listener after the music starts playing to avoid starting it again on future clicks
-      document.removeEventListener("click", playBackgroundMusic);
-    };
-    document.addEventListener("click", playBackgroundMusic);
-
-    const interval = setInterval(updateGameArea, gameSpeed);
-    return () => {
-      clearInterval(interval);
-
-      // ! Pause and reset the background music when the component unmounts
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
-    };
-  }, [updateGameArea, gameSpeed]);
-
-  // ** Function to handle collision
-  const handleCollision = () => {
-    const collisionSound = collisionSoundRef.current;
-    collisionSound.play(); // Play the collision sound on collision
-    const backgroundMusic = backgroundMusicRef.current;
-    backgroundMusic.pause(); // ? Pause the background music on collision
-    // Optionally, you can reset the audio to the beginning
-    backgroundMusic.currentTime = 0;
-  };
-
-  // ** Function to handle pausing the game
+  // Function to handle pausing the game
   const handlePauseGame = () => {
     setIsPaused(true);
     setShowModal(true);
-    // ? Pause the background music when the game is paused
-    backgroundMusicRef.current.pause();
   };
 
-  // ** Function to handle resuming the game
+  // Function to handle resuming the game
   const handleResumeGame = () => {
     setIsPaused(false);
     setShowModal(false);
-    // Resume the background music when the game is resumed
-    backgroundMusicRef.current.play().catch((err) => {
-      console.log(err); // ? Handle play() promise rejection
-    });
   };
 
-  // ** Function to handle closing the modal
+  // Function to handle closing the modal
   const handleCloseModal = () => {
     if (isGameOver) {
-      setGamePieceX(10);
-      setGamePieceY(120);
+      setGamePieceX(gameAreaWidth / 2 - gamePieceSize / 2);
+      setGamePieceY(gameAreaHeight / 2 - gamePieceSize / 2);
       setObstacles([]);
       setScore(0);
       setIsGameOver(false);
@@ -249,9 +182,33 @@ const GameArea = () => {
       setShowModal(false);
     }
   };
-  
 
-  // * Render the game area
+  // Function to handle collision
+  const handleCollision = () => {
+    const collisionSound = collisionSoundRef.current;
+    collisionSound.play(); // Play the collision sound on collision
+  };
+
+  // Use effect to start and stop the game loop
+  useEffect(() => {
+    const interval = setInterval(updateGameArea, gameSpeed);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [updateGameArea, gameSpeed]);
+
+  // Use effect to handle the cleanup of collisionSoundRef
+  useEffect(() => {
+    const collisionSound = collisionSoundRef.current;
+
+    // Cleanup the collision sound when the component unmounts
+    return () => {
+      collisionSound.pause();
+      collisionSound.currentTime = 0;
+    };
+  }, []);
+
+  // Render the game area
   return (
     <div id="gamearea" tabIndex={0} onKeyDown={handleKeyPress}>
       {/* Use the entire screen for the game area */}
@@ -259,14 +216,14 @@ const GameArea = () => {
 
       <Modal show={!isGameStarted || showModal} onHide={handleCloseModal} centered>
         {/* Modal Header */}
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>
             {/* Display "Paused" or "Game Over" and the Scoreboard in the same line */}
             <div className="gamePause">
-              <div className="box box-a">
+              <div className="scoreboard-box">
                 <Scoreboard score={score} />
               </div>
-              <div className="box box-b">
+              <div className="button-box">
                 {!isGameStarted ? (
                   <Button variant="primary" onClick={handleStartGame}>
                     Start Game
@@ -314,62 +271,35 @@ const GameArea = () => {
 
       {/* Game control buttons */}
       <div style={{ position: 'absolute', bottom: 20, right: 20 }}>
-       
         {/* Cross layout for game control buttons */}
         <div className="game-controls d-flex flex-column align-items-center justify-content-center">
-          
-          <div className="col-4 d-flex justify-content-center align-items-center">
-            <div className="d-flex flex-column">
-              <button className='myBtn' onClick={() => setGamePieceY((prevY) => prevY - 10)}>
-                {/* button to go up */}
-                <FontAwesomeIcon icon={faArrowUp} />
-              </button>
-            </div>
+          <div className="d-flex flex-column">
+            <button className='myBtn' onClick={() => setGamePieceY((prevY) => prevY - 10)}>
+              <FontAwesomeIcon icon={faArrowUp} />
+            </button>
           </div>
-
           <div className="row">
             <div className="col-4">
               <button className='myBtn' onClick={() => setGamePieceX((prevX) => prevX - 10)}>
-                {/* button to go left */}
                 <FontAwesomeIcon icon={faArrowLeft} />
               </button>
             </div>
-
             <div className="col-4">
-              <div className="d-flex justify-content-center">
-                <button className='myBtn' onClick={handlePauseGame}>
-                  {/* button to pause */}
-                  <FontAwesomeIcon icon={faPause} />
-                </button>
-              </div>
+              <button className='myBtn' onClick={isPaused ? handleResumeGame : handlePauseGame}>
+                <FontAwesomeIcon icon={isPaused ? faPlay : faPause} />
+              </button>
             </div>
-
             <div className="col-4">
               <button className='myBtn' onClick={() => setGamePieceX((prevX) => prevX + 10)}>
-                {/* button to go right */}
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
             </div>
-
           </div>
-
-          <div className="row">
-            <div className="col-4">
-              {/* Empty space below left button */}
-            </div>
-            <div className="col-4 d-flex justify-content-center align-items-center">
-              <div className="d-flex flex-column">
-                <button className='myBtn' onClick={() => setGamePieceY((prevY) => prevY + 10)}>
-                  {/* button to go right */}
-                  <FontAwesomeIcon icon={faArrowDown} />
-                </button>
-              </div>
-            </div>
-            <div className="col-4">
-              {/* Empty space below right button */}
-            </div>
+          <div className="d-flex flex-column">
+            <button className='myBtn' onClick={() => setGamePieceY((prevY) => prevY + 10)}>
+              <FontAwesomeIcon icon={faArrowDown} />
+            </button>
           </div>
-          
         </div>
 
         {/* Alert box */}
